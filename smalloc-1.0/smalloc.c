@@ -114,3 +114,24 @@ void print_sm_containers()
 	printf("=======================================================\n") ;
 
 }
+
+void print_sm_uses()
+{
+	sm_container_ptr itr;
+	int total_memory = 0;
+	int used_memory = 0;
+	int unused_memory = 0;
+
+	for (itr = sm_first; itr != 0x0 ; itr = itr->next)
+	{
+		if(itr->status == Unused)
+			unused_memory += itr->dsize;
+		else if(itr->status == Busy)
+			used_memory += itr->dsize;
+	}
+	total_memory = used_memory + unused_memory ;
+	fprintf(stderr, "****information of memory amount by smalloc****\n");
+	fprintf(stderr, "  retained memory                    : %d\n", total_memory);
+	fprintf(stderr, "  allocated  memory                  : %d\n", used_memory);
+	fprintf(stderr, "  retained but not allocated memeory : %d\n", unused_memory);
+}

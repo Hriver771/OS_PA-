@@ -15,4 +15,4 @@ typedef sm_container_t * sm_container_ptr ;
 void * smalloc(size_t size) ; 
 void sfree(void * p) ;
 void print_sm_containers() ;
-/* void print_sm_uses() ; */
+void print_sm_uses() ;
