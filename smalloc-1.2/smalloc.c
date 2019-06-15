@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "smalloc.h" 
 
 sm_container_ptr sm_first = 0x0 ;
@@ -160,6 +161,19 @@ void * smalloc(size_t size)
 	return hole->data ;
 }
 
+void sm_merge_hole(sm_container_ptr itr)
+{
+	sm_container_ptr mer = itr->next ;
+
+	sm_del_unused_list(itr) ;
+	sm_del_unused_list(itr->next) ;
+
+	itr->dsize += sizeof(sm_container_t) + mer->dsize ;
+	itr->next = mer->next ;
+//	free(mer) ;
+
+	sm_ist_unused_list(itr) ;
+}
 
 
 void sfree(void * p)
@@ -169,6 +183,10 @@ void sfree(void * p)
 		if (itr->data == p) {
 			itr->status = Unused ;
 			sm_ist_unused_list(itr) ;
+			if ((itr->next)->status == Unused)
+			{
+				sm_merge_hole(itr);
+			}
 			break ;
 		}
 	}

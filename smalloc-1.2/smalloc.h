@@ -12,6 +12,7 @@ typedef struct _sm_container_t {
 
 typedef sm_container_t * sm_container_ptr ;
 
+void sm_merge_hole(sm_container_ptr) ;
 void print_unused_list();
 void sm_del_unused_list(sm_container_ptr) ;
 void sm_ist_unused_list(sm_container_ptr) ;
