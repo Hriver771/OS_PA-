@@ -9,13 +9,11 @@ sm_container_ptr sm_unused_containers = 0x0 ;
 
 void sm_ist_unused_list(sm_container_ptr hole)
 {
-	printf("########insert: %p\n", hole->data) ;
 	sm_container_ptr tmp = sm_unused_containers ;
 	if (tmp == NULL)
 	{
 		hole->next_unused = NULL ;
 		sm_unused_containers = hole ;
-		print_unused_list() ;
 		return ;
 	}
 	if (tmp == hole)
@@ -28,12 +26,10 @@ void sm_ist_unused_list(sm_container_ptr hole)
 	}
 	tmp->next_unused = hole;
 	hole->next_unused = NULL ;
-	print_unused_list() ;
 }
 
 void sm_del_unused_list(sm_container_ptr rm)
 {
-	printf("@@@@@@@@@@@@ del:%p @@@@@@@@@@@\n", rm->data);
 	sm_container_ptr tmp = sm_unused_containers ;
 
 	if (tmp == NULL)
@@ -45,7 +41,6 @@ void sm_del_unused_list(sm_container_ptr rm)
 	{
 		sm_unused_containers = rm->next_unused ;
 		rm->next_unused = NULL ;
-		print_unused_list() ;
 		return ;
 	}
 	while (tmp->next_unused != NULL)
@@ -61,7 +56,6 @@ void sm_del_unused_list(sm_container_ptr rm)
 	}
 	tmp->next_unused = rm->next_unused ;
 	rm->next_unused = NULL ;
-	print_unused_list() ;
 }
 
 void print_unused_list()
